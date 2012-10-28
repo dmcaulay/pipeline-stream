@@ -108,7 +108,7 @@ Stream.prototype.pipe = function(dest) {
     dest.emit('drain');
     dest.noops++;
 
-    if (dest.reporter) dest.reporter.on('noop', flow, info);
+    if (dest.reporter) dest.reporter.on('noop', dest.name, info);
   }
   dest.on('noop', onNoop);
 
@@ -127,7 +127,7 @@ Stream.prototype.pipe = function(dest) {
     // couldn't send data downstream so we emit a drain
     // event
     dest.emit('drain');
-    if (dest.reporter) dest.reporter.on('error', flow, info);
+    if (dest.reporter) dest.reporter.on('error', dest.name, info);
   }
   dest.on('error', onError);
 
