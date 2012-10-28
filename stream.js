@@ -45,6 +45,7 @@ var Stream = module.exports = function(options) {
   this.name = options.name;
   this.count = 0;
   this.max = options.max || 1;
+  this.reporter = options.reporter;
   this.resetStats();
 };
 util.inherits(Stream, EventEmitter);
@@ -72,6 +73,7 @@ Stream.prototype.getStats = function() {
 
 Stream.prototype.pipe = function(dest) {
   var source = this;
+  var flow = source.name + '->' + dest.name;
 
   function onData(data) {
     dest.write(data);
@@ -79,6 +81,8 @@ Stream.prototype.pipe = function(dest) {
     dest.count++;
     dest.writes++;
     source.datas++;
+
+    if (dest.reporter) dest.reporter.on('data', flow, data);
 
     if (dest.onDrain) {
       // always drain if control flow stream
@@ -99,10 +103,12 @@ Stream.prototype.pipe = function(dest) {
   }
   dest.on('next', onNext);
 
-  function onNoop() {
+  function onNoop(info) {
     // stream decided not sending this data down the pipe
     dest.emit('drain');
     dest.noops++;
+
+    if (dest.reporter) dest.reporter('noop', flow, info);
   }
   dest.on('noop', onNoop);
 
@@ -116,11 +122,12 @@ Stream.prototype.pipe = function(dest) {
   }
   dest.on('drain', onDrain);
 
-  function onError(err) {
+  function onError(err, info) {
     // we assume that an error means that you
     // couldn't send data downstream so we emit a drain
     // event
     dest.emit('drain');
+    if (dest.reporter) dest.reporter('error', flow, info);
   }
   dest.on('error', onError);
 
