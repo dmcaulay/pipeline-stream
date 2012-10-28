@@ -36,6 +36,12 @@ var util = require('util');
 var Stream = module.exports = function(options) {
   EventEmitter.call(this);
 
+  function onError(err) {
+    this.errors++;
+    if (this.listeners('error').length === 1) throw err;
+  }
+  this.on('error', onError);
+
   this.name = options.name;
   this.count = 0;
   this.max = options.max || 1;
@@ -43,12 +49,37 @@ var Stream = module.exports = function(options) {
 };
 util.inherits(Stream, EventEmitter);
 
+Stream.prototype.resetStats = function() {
+  this.datas = 0;
+  this.writes = 0;
+  this.nexts = 0;
+  this.errors = 0;
+  this.drains = 0;
+  this.noops = 0;
+};
+
+Stream.prototype.getStats = function() {
+  return {
+    datas: this.datas,
+    count: this.count,
+    writes: this.writes,
+    nexts: this.nexts,
+    noops: this.noops,
+    drains: this.drains,
+    errors: this.errors
+  };
+}
+
 Stream.prototype.pipe = function(dest) {
   var source = this;
 
   function onData(data) {
     dest.write(data);
+
     dest.count++;
+    dest.writes++;
+    source.datas++;
+
     if (dest.onDrain) {
       // always drain if control flow stream
       dest.emit('drain');
@@ -64,18 +95,21 @@ Stream.prototype.pipe = function(dest) {
     // stream is done processing data and sending it down the pipe
     dest.emit('drain');
     dest.emit('data', data);
+    dest.next++;
   }
   dest.on('next', onNext);
 
   function onNoop() {
     // stream decided not sending this data down the pipe
     dest.emit('drain');
+    dest.noops++;
   }
   dest.on('noop', onNoop);
 
   function onDrain(internal) {
     // stream is done processing data
     dest.count--;
+    dest.drains++;
     if (source.onDrain) {
       if (dest.count < dest.max) source.onDrain();
     }
