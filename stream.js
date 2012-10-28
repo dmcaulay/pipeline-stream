@@ -127,6 +127,7 @@ Stream.prototype.pipe = function(dest) {
     // couldn't send data downstream so we emit a drain
     // event
     dest.emit('drain');
+    info.err = err;
     if (dest.reporter) dest.reporter.on('error', dest.name, info);
   }
   dest.on('error', onError);

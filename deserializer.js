@@ -3,7 +3,7 @@ var Stream = require('./stream');
 var Parser = require('jsonparse');
 var util = require('util');
 
-var In = module.exports = function(options) {
+var Deserializer = module.exports = function(options) {
   Stream.call(this, options);
 
   var stream = this;
@@ -11,9 +11,12 @@ var In = module.exports = function(options) {
   parser.onValue = function(value) {
     if (!this.stack.length) stream.emit('data', value);
   };
+  parser.onError = function(err) {
+    this.emit('error', err);
+  };
   process.stdin.on('data', function(chunk) {
     parser.write(chunk);
   });
 };
-util.inherits(In, Stream);
+util.inherits(Deserializer, Stream);
 
