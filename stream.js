@@ -2,7 +2,7 @@
 // inspired by node.js stream
 //
 // there is no concept of pause, resume, end or close 
-// i've decided to remove them because i think it complicates the base
+// i've decided to remove them because i think they complicate the node.js
 // stream class
 //
 // control flow is currently implemented with the drain event.
@@ -23,8 +23,8 @@
 //     more data down the pipe
 //   - you call emit('data') when you send data down the pipe
 // 3) normal stream
-//   - you call emit('next', data) when you're done and ready to send data down the pipe
-//   - you call emit('noop') if you need more data before sending anything down the pipe
+//   - you emit('next', data) when you're done and ready to send data down the pipe
+//   - you emit('noop') if you need more data before sending anything down the pipe
 //     - filter or batch job
 //   - you allow max number of items to queue up by calling source.onDrain in the
 //     onData method while count < max
@@ -108,11 +108,11 @@ Stream.prototype.pipe = function(dest) {
     dest.emit('drain');
     dest.noops++;
 
-    if (dest.reporter) dest.reporter('noop', flow, info);
+    if (dest.reporter) dest.reporter.on('noop', flow, info);
   }
   dest.on('noop', onNoop);
 
-  function onDrain(internal) {
+  function onDrain() {
     // stream is done processing data
     dest.count--;
     dest.drains++;
@@ -127,7 +127,7 @@ Stream.prototype.pipe = function(dest) {
     // couldn't send data downstream so we emit a drain
     // event
     dest.emit('drain');
-    if (dest.reporter) dest.reporter('error', flow, info);
+    if (dest.reporter) dest.reporter.on('error', flow, info);
   }
   dest.on('error', onError);
 
