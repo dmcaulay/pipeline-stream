@@ -3,7 +3,7 @@ var Stream = require('./stream');
 var util = require('util');
 
 var Queue = module.exports = function(options) {
-  Stream.call(this);
+  Stream.call(this, options);
 
   this.send = true;
   this.queue = [];
