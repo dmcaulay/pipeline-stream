@@ -8,7 +8,7 @@ var Queue = module.exports = function(options) {
   this.send = true;
   this.queue = [];
 };
-util.inherits(Stream, EventEmitter);
+util.inherits(Queue, Stream);
 
 Queue.prototype.write = function(data) {
   if (this.send) {
