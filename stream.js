@@ -82,7 +82,7 @@ Stream.prototype.pipe = function(dest) {
     dest.writes++;
     source.datas++;
 
-    if (dest.reporter) dest.reporter.on('data', flow, data);
+    if (dest.reporter) dest.reporter.emit('data', flow, data);
 
     if (dest.onDrain) {
       // always drain if control flow stream
@@ -108,7 +108,7 @@ Stream.prototype.pipe = function(dest) {
     dest.emit('drain');
     dest.noops++;
 
-    if (dest.reporter) dest.reporter.on('noop', dest.name, info);
+    if (dest.reporter) dest.reporter.emit('noop', dest.name, info);
   }
   dest.on('noop', onNoop);
 
@@ -128,7 +128,7 @@ Stream.prototype.pipe = function(dest) {
     // event
     dest.emit('drain');
     info.err = err;
-    if (dest.reporter) dest.reporter.on('error', dest.name, info);
+    if (dest.reporter) dest.reporter.emit('error', dest.name, info);
   }
   dest.on('error', onError);
 
