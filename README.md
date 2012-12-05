@@ -48,7 +48,7 @@ resetStats: reset the stats
 ```
 
 #compatibility:
-######doesn't this break compatibility with all the other streams out there?
+#####doesn't this break compatibility with all the other streams out there?
 yes it does, but combatibility can easily be restored by adding a queue that listens to the control flow logic of node.js
-######isn't node.js releasing a new and simpler version anyways?
+#####isn't node.js releasing a new and simpler version anyways?
 the answer is yes, but i still don't like the control flow built into the stream class. i think it's too complex and adds more state than i really want to deal with. id rather keep my middleware streams simpler and have all the control flow handled in separate streams. plus, it's just a fun topic to explore.
