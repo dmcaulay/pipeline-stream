@@ -36,7 +36,7 @@ this is where everything interesting happens. most appication developers will on
 #options
 ```
 name:     the name of the stream
-max:      the max number of items to write in parallel
+max:      the max number of items to process in parallel
 reporter: an object used to report data, error, noop events
 ```
 
