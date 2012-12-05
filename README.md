@@ -23,15 +23,13 @@ you'll see that the queue is its own stream. i prefer this because it keeps the 
 this is where everything interesting happens. most appication developers will only write middleware streams. they receive data do their job and emit new data to the downstream stream. they are also responsible for calling drain when they're done with the data.
 
 #events:
-`'data'` emitted to send data down the pipe
-
-`'drain'` emitted to indicate the stream is done processing data
-
-`'error'` emitted to indicate something went wrong while processing this chunk of data. as a convenience, when you pipe one stream to another stream we add a listener on the error event that automatically calls drain so the upstream queue knows to send more data.
-
-`'next'` emitted to send data and emit the drain event
-
-`'noop'` emitted to indicate the streram is ignoring this data and not sending it down the pipe
+```
+'data'  - emitted to send data down the pipe
+'drain' - emitted to indicate the stream is done processing data
+'error' - emitted to indicate something went wrong while processing this chunk of data. as a convenience, when you pipe one stream to another stream we add a listener on the error event that automatically calls drain so the upstream queue knows to send more data.
+'next'  - emitted to send data and emit the drain event
+'noop'  - emitted to indicate the streram is ignoring this data and not sending it down the pipe
+```
 
 #options
 name: the name of the stream
