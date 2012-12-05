@@ -14,13 +14,13 @@ s->q->m->q->m->...
 streams emit data when sending down the pipe and emit drain when they are ready for more data. lets go over how this works for all 3 of the types.
 
 ##source:
-the source stream reads data as fast as it wants and sends it down the pipe. this stream doesn't need to emit drain because there is no one upstram.
+the source stream reads data as fast as it wants and sends it down the pipe. this stream doesn't need to emit drain because there is no one upstream.
 
 ##queue:
 you'll see that the queue is its own stream. i prefer this because it keeps the logic out of the middleware streams and makes it easy to move the queue out of memory to something like sqs or redis. queues receive data, but only emit data after their onDrain method is called. there is one exception to this rule and that's at startup. we assume that the downstream stream can handle the first chunk of data before it calls drain.
 
 #middleware:
-this is where everything interesting happens. most appication developers will only write middleware streams. they receive data do their job and emit new data to the downstream stream. they are also responsible for calling drain when they're done with the data.
+this is where everything interesting happens. most appication developers will only write middleware streams. they receive data, do their job and emit new data to the downstream stream. they are also responsible for calling drain when they're done with the data.
 
 #events:
 ```
@@ -33,14 +33,14 @@ this is where everything interesting happens. most appication developers will on
 'noop'  - emitted to indicate the streram is ignoring this data and not sending it down the pipe
 ```
 
-#options
+#options:
 ```
 name:     the name of the stream
 max:      the max number of items to process in parallel
 reporter: an object used to report data, error, noop events
 ```
 
-#methods
+#methods:
 pipe: same as node.js
 getStats: get an object containing the current stats
 resetStats: reset the stats
