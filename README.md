@@ -17,7 +17,7 @@ streams emit data when sending down the pipe and emit drain when they are ready 
 the source stream reads data as fast as it wants and sends it down the pipe. this stream doesn't need to emit drain because there is no one upstram.
 
 ##queue:
-you'll see that the queue is it's own stream. i prefer this because it keeps the logic out of the middleware streams and makes it easy to move the queue out of memory to something like sqs or redis. queues receive data, but only emit data after their onDrain method is called. there is one exception to this rule and that's at startup. we assume that the downstream stream can handle the first chunk of data before it calls drain.
+you'll see that the queue is its own stream. i prefer this because it keeps the logic out of the middleware streams and makes it easy to move the queue out of memory to something like sqs or redis. queues receive data, but only emit data after their onDrain method is called. there is one exception to this rule and that's at startup. we assume that the downstream stream can handle the first chunk of data before it calls drain.
 
 #middleware:
 this is where everything interesting happens. most appication developers will only write middleware streams. they receive data do their job and emit new data to the downstream stream. they are also responsible for calling drain when they're done with the data.
