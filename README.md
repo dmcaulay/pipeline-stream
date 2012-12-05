@@ -14,7 +14,7 @@ s->q->m->q->m->...
 streams emit data when sending down the pipe and emit drain when they are ready for more data. lets go over how this works for all 3 of the types.
 
 ##source:
-the source stream reads data as fast as it wants and sends it down the pipe. this stream doesn't need to emit drain because there is noone upstram.
+the source stream reads data as fast as it wants and sends it down the pipe. this stream doesn't need to emit drain because there is no one upstram.
 
 ##queue:
 you'll see that the queue is it's own stream. i prefer this because it keeps the logic out of the middleware streams and makes it easy to move the queue out of memory to something like sqs or redis. queues receive data, but only emit data after their onDrain method is called. there is one exception to this rule and that's at startup. we assume that the downstream stream can handle the first chunk of data before it calls drain.
