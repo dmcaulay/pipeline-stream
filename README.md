@@ -2,7 +2,7 @@
 
 Node.js streams for data pipelines. Inspired by the Node.js `Stream` class
 
-there is no concept of pause, resume, end or close i've decided to remove them because i think they complicate the node.js stream class and they aren't necessary for a data pipeline.
+there is no concept of pause, resume, end or close. i've decided to remove them because i think they complicate the node.js stream class and they aren't necessary for a data pipeline.
 
 ```
 basic stream layout
@@ -41,9 +41,11 @@ reporter: an object used to report data, error, noop events
 ```
 
 #methods:
-pipe: same as node.js
-getStats: get an object containing the current stats
+```
+pipe:       same as node.js
+getStats:   get an object containing the current stats
 resetStats: reset the stats
+```
 
 #compatibility
 ##doesn't this break compatibility with all the other streams out there?
