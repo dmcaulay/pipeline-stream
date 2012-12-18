@@ -1,6 +1,6 @@
 {
   "name": "pipeline-stream",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "streams for a data pipeline",
   "main": "index.js",
   "scripts": {
