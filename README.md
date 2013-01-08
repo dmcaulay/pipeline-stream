@@ -37,7 +37,7 @@ this is where everything interesting happens. most appication developers will on
 ```
 name:     the name of the stream
 max:      the max number of items to process in parallel
-reporter: an object used to report data, error, noop events
+debug:    an object used to report data, error, noop events when debugging your pipeline
 ```
 
 #methods:
