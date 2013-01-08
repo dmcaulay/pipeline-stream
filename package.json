@@ -1,6 +1,6 @@
 {
   "name": "pipeline-stream",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "streams for a data pipeline",
   "main": "index.js",
   "scripts": {
@@ -14,5 +14,11 @@
     "streams"
   ],
   "author": "Dan McAulay",
-  "license": "BSD"
+  "license": "BSD",
+  "dependencies": {
+    "jsonparse": "0.0.4"
+  },
+  "devDependencies": {
+    "mocha": "~1.8.0"
+  }
 }
