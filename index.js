@@ -5,5 +5,6 @@ module.exports = {
   Parser: require('./lib/parser'),
   Queue: require('./lib/queue'),
   StreamedParser: require('./lib/streamedParser'),
-  Stringify: require('./lib/stringify')
+  Stringify: require('./lib/stringify'),
+  Transform: require('./lib/transform')
 };
