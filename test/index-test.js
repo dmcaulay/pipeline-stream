@@ -17,8 +17,7 @@ describe('pipeline-stream', function() {
   describe('nodeWritable', function() {
     it('sets writable to true', function() {
       var obj = {}
-      pipelineStream.nodeWritable(obj)
-      assert(obj.writable)
+      assert(pipelineStream.nodeWritable(obj).writable)
     })
   })
 })

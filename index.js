@@ -9,6 +9,7 @@ module.exports = {
   Stringify: require('./lib/stringify'),
   Transform: require('./lib/transform'),
   nodeWritable: function(stream) {
-    stream.writable = true
+    stream.writable = true;
+    return stream;
   }
 };
