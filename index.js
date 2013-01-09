@@ -7,5 +7,8 @@ module.exports = {
   Queue: require('./lib/queue'),
   StreamedParser: require('./lib/streamedParser'),
   Stringify: require('./lib/stringify'),
-  Transform: require('./lib/transform')
+  Transform: require('./lib/transform'),
+  nodeWritable: function(stream) {
+    stream.writable = true
+  }
 };

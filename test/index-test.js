@@ -12,5 +12,13 @@ describe('pipeline-stream', function() {
     assert(pipelineStream.StreamedParser)
     assert(pipelineStream.Stringify)
     assert(pipelineStream.Transform)
+    assert(pipelineStream.nodeWritable)
+  })
+  describe('nodeWritable', function() {
+    it('sets writable to true', function() {
+      var obj = {}
+      pipelineStream.nodeWritable(obj)
+      assert(obj.writable)
+    })
   })
 })
