@@ -7,6 +7,7 @@ describe('pipeline-stream', function() {
     assert(pipelineStream.Stream)
     assert(pipelineStream.Array)
     assert(pipelineStream.Parser)
+    assert(pipelineStream.Pick)
     assert(pipelineStream.Queue)
     assert(pipelineStream.StreamedParser)
     assert(pipelineStream.Stringify)
