@@ -7,7 +7,7 @@ describe('stringify', function() {
   it('stringifies objects', function(done) {
     var stream = new Stringify({config: 'stringify-test'})
     stream.on('next', function(data, meta) {
-      assert.equal(data, '{"hello":"world"}')
+      assert.equal(data, '{"data":{"hello":"world"},"meta":{"meta":"data"}}')
       assert.deepEqual(meta, metadata)
       done()
     })
