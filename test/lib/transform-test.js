@@ -46,4 +46,24 @@ describe('transform', function() {
     })
     stream.write({x:1,y:2,z:3}, metadata)
   })
+  it('doesnt add the field to the object if output is false', function(done) {
+    var stream = new Transform({
+      name: 'tranform-test', 
+      fields: { 
+        x: { output: 'z', transform: function(x) { return x+1 } }, 
+        y: { 
+          transform: function(y, current) { 
+            current.x = y + current.z 
+          },
+          output: false
+        }
+      }
+    })
+    stream.on('next', function(data, meta) {
+      assert.deepEqual(data, {z:2,x:4})
+      assert.deepEqual(meta, metadata)
+      done()
+    })
+    stream.write({x:1,y:2,z:3}, metadata)
+  })
 })
