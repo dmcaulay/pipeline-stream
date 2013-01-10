@@ -10,6 +10,9 @@ module.exports = {
   Transform: require('./lib/transform'),
   nodeWritable: function(stream) {
     stream.writable = true;
+    stream.on('next', function(data, meta) {
+      stream.emit('data', data, meta)
+    })
     return stream;
   }
 };

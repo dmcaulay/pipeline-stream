@@ -1,5 +1,6 @@
 
 var assert = require('assert')
+var EventEmitter = require('events').EventEmitter
 var pipelineStream = require('../')
 
 describe('pipeline-stream', function() {
@@ -16,8 +17,19 @@ describe('pipeline-stream', function() {
   })
   describe('nodeWritable', function() {
     it('sets writable to true', function() {
-      var obj = {}
+      var obj = new EventEmitter()
       assert(pipelineStream.nodeWritable(obj).writable)
+    })
+    it('emitting next emits the data event', function(done) {
+      var obj = new EventEmitter()
+      pipelineStream.nodeWritable(obj)
+      var metadata = {meta: 'data'}
+      obj.on('data', function(data, meta) {
+        assert.equal(data, 'test')
+        assert.deepEqual(meta, metadata)
+        done()
+      })
+      obj.emit('next', 'test', metadata)
     })
   })
 })
