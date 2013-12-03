@@ -8,6 +8,7 @@ module.exports = {
   StreamedParser: require('./lib/streamedParser'),
   Stringify: require('./lib/stringify'),
   Transform: require('./lib/transform'),
+  util: require('./lib/util'),
   nodeWritable: function(stream) {
     stream.writable = true;
     stream.on('next', function(data, meta) {
